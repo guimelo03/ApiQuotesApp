@@ -22,6 +22,9 @@ gem "solid_cable"
 
 gem "mongoid"
 
+gem "sidekiq"
+gem "sidekiq-cron"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
