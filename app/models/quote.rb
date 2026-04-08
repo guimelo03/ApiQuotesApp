@@ -4,4 +4,21 @@ class Quote
 
   field :content, type: String
   field :author, type: String
+
+  embedded_in :tag_cache
+
+  before_validation :normalize_fields
+
+  validates :content, presence: true
+
+  def as_json(options = {})
+    super(only: [ :content, :author ])
+  end
+
+  private
+
+  def normalize_fields
+    self.content = content.to_s.strip
+    self.author = author.to_s.strip.presence
+  end
 end
