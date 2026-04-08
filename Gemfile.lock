@@ -83,6 +83,7 @@ GEM
       msgpack (~> 1.2)
     brakeman (8.0.4)
       racc
+    bson (5.2.0)
     builder (3.3.0)
     bundler-audit (0.9.3)
       bundler (>= 1.2.0)
@@ -154,6 +155,13 @@ GEM
     minitest (6.0.3)
       drb (~> 2.0)
       prism (~> 1.5)
+    mongo (2.23.0)
+      base64
+      bson (>= 4.14.1, < 6.0.0)
+    mongoid (9.0.10)
+      activemodel (>= 5.1, < 8.2, != 7.0.0)
+      concurrent-ruby (>= 1.0.5, < 2.0)
+      mongo (>= 2.18.0, < 3.0.0)
     msgpack (1.8.0)
     net-imap (0.6.3)
       date
@@ -344,6 +352,7 @@ DEPENDENCIES
   debug
   image_processing (~> 1.2)
   kamal
+  mongoid
   puma (>= 5.0)
   rails (~> 8.1.3)
   rubocop-rails-omakase
