@@ -20,10 +20,14 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+gem "active_model_serializers"
+
 gem "mongoid"
 
 gem "sidekiq"
 gem "sidekiq-cron"
+
+gem "jwt"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
