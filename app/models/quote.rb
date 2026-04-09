@@ -4,6 +4,8 @@ class Quote
 
   field :content, type: String
   field :author, type: String
+  field :author_about, type: String
+  field :tags, type: Array
 
   embedded_in :tag_cache
 
@@ -20,5 +22,6 @@ class Quote
   def normalize_fields
     self.content = content.to_s.strip
     self.author = author.to_s.strip.presence
+    self.author_about.to_s.presence
   end
 end
