@@ -1,0 +1,4 @@
+fetch_quotes_job:
+  cron: "0 */12 * * *"
+  class: "FetchQuotesJob"
+  queue: quote_api
