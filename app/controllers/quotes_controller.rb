@@ -1,16 +1,12 @@
 class QuotesController < ApplicationController
   def show
-    tag = params[:tag]
+    result = QuoteService::FetchByTag.call(tag: params[:tag])
 
-    tag_cache = TagCache.find_by(tag: tag)
-
-    if tag_cache&.cached?
-      render json: serialized_quotes(tag_cache.quotes)
+    if result.success?
+      render json: serialized_quotes(result.data)
     else
-      FetchQuotesJob.perform_later(tag)
-
       render json: {
-        message: "Cache sendo gerado para '#{tag}' Tente novamente em instantes."
+        message: "Cache sendo gerado para '#{params[:tag]}' Tente novamente em instantes."
       }, status: :accepted
     end
   end
