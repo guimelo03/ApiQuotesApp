@@ -10,8 +10,10 @@ class TagCache
 
   index({ tag: 1 }, { unique: true, background: true })
 
+  index({ updated_at: 1 }, { expire_after_seconds: 48.hours })
+
   def cached?
-    persisted? && quotes.present?
+    persisted? && quotes.present? && updated_at > 12.hours
   end
 
   private
