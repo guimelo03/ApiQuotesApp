@@ -28,11 +28,11 @@ module QuoteService
         next if existing_content.include?(content)
 
         author = q["author"]["name"]
-        author_about = q["author"]["goodreads_link"]
+        slug = q["author"]["slug"]
         tags = q["tags"]
 
-        author_about_link = if author_about.present?
-          "https://quotes.toscrape.com#{author_about}"
+        author_about_link = if slug.present?
+          "https://quotes.toscrape.com/author/#{slug}"
         end
 
         tag_cache.quotes.create!(
