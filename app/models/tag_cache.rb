@@ -13,12 +13,12 @@ class TagCache
   index({ updated_at: 1 }, { expire_after_seconds: 48.hours })
 
   def cached?
-    persisted? && quotes.present? && updated_at > 12.hours
+    persisted? && quotes.present? && updated_at&.>(12.hours.ago)
   end
 
   private
 
   def normalize_tag
-    self.tag = tag.to_s.downcase.strip.presence
+    self.tag = tag.to_s.downcase.strip
   end
 end
