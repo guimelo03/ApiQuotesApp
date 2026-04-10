@@ -18,7 +18,7 @@ module QuoteService
       return on_failure("Erro na requisição") unless response.is_a?(Net::HTTPSuccess)
 
       quote_data = JSON.parse(response.body)
-      return on_failure("Nenhuma quote encontrada para #{tag}") if quote_data["quotes"].empty?
+      return on_failure("Nenhuma quote encontrada para #{tag}") if quote_data["quotes"].blank?
 
       tag_cache = TagCache.find_or_create_by(tag: tag)
       existing_content = tag_cache.quotes.map { |q| normalize(q.content) }
