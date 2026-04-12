@@ -13,7 +13,11 @@ class TagCache
   index({ updated_at: 1 }, { expire_after_seconds: 48.hours })
 
   def cached?
-    persisted? && quotes.present? && updated_at&.>(12.hours.ago)
+    return false unless persisted?
+    return false unless quotes.present?
+    return false unless updated_at
+
+    (Time.current - updated_at) < 12.hours
   end
 
   private
