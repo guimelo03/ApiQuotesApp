@@ -43,5 +43,40 @@ RSpec.describe "QuotesAPI", type: :request do
         expect(response).to have_http_status(:accepted)
       end
     end
+
+    context "quando cache está expirado" do
+      include ActiveJob::TestHelper
+
+      before do
+        TagCache.delete_all
+
+        TagCache.create!(
+          tag: tag,
+          updated_at: 2.days.ago,
+          quotes: [
+            Quote.new(content: "old quote", author: "test")
+          ]
+        )
+      end
+
+      it "retorna 202 e atualiza o cache em background" do
+        perform_enqueued_jobs do
+          get "/quotes/#{tag}", headers: {
+            "Authorization" => "Bearer #{valid_token}"
+          }
+        end
+
+        expect(response).to have_http_status(:accepted)
+
+        get "/quotes/#{tag}", headers: {
+          "Authorization" => "Bearer #{valid_token}"
+        }
+
+        expect(response).to have_http_status(:ok)
+
+        body = JSON.parse(response.body)
+        expect(body["quotes"]).not_to be_empty
+      end
+    end
   end
 end
