@@ -4,11 +4,12 @@ class QuotesController < ApplicationController
 
     if result.success?
       render json: serialized_quotes(result.data)
-    elsif result.errors = :processing
+    elsif result.errors == :processing
       render json: {
         message: "Cache sendo gerado para '#{params[:tag]}' Tente novamente em instantes."
       }, status: :accepted
     else
+      puts result.errors.inspect
       render json: { error: result.errors }, status: :unprocessable_entity
     end
   end
