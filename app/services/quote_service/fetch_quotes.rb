@@ -45,6 +45,8 @@ module QuoteService
         existing_content << content
       end
 
+      tag_cache.set(updated_at: Time.current)
+
       on_success(tag_cache.quotes)
     rescue StandardError => e
       on_failure(e.message)
